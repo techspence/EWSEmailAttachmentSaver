@@ -102,7 +102,7 @@ Function FindTargetEmail($subject){
 			elseif ($filemonth -gt "10"){} 
 			else {$filemonth = $filemonth.Split("0")[1]}
 
-			if ($attachment.Name.ToString() -like '*Workstation*'){
+			if ($attachmentname -like '*Workstation*'){
 				$workstationreportfolder = $reportroot + "Workstations\" + $fileyear + "\" + $filemonth + "\"
 				if (!(Test-Path $workstationreportfolder)) {
 					LogWrite "$workstationreportfolder not found.."
@@ -117,7 +117,7 @@ Function FindTargetEmail($subject){
 					$file.Write($attachment.Content, 0, $attachment.Content.Length)
 				}
 				$file.Close()
-			} elseif ($attachment.Name.ToString() -like '*Server*'){
+			} elseif ($attachmentname -like '*Server*'){
 				$serverreportfolder = $reportroot + "Servers\" + $fileyear + "\" + $filemonth + "\"
 				if (!(Test-Path $serverreportfolder)) {
 					LogWrite "$serverreportfolder not found.."
