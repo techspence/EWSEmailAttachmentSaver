@@ -49,7 +49,7 @@ Function LogWrite
 	Param ([string]$logstring)
 	
 	if (!(Test-Path $logpath)) {
-		New-Item -ItemType Directory $logpath
+		New-Item -ItemType Directory $logpath | Out-Null
 	} 
 	else { 
 		Add-content $logfile -value $logstring
@@ -108,14 +108,10 @@ Function FindTargetEmail($subject){
 					LogWrite "$workstationreportfolder not found.."
 					LogWrite "Creating it now.."
 					New-Item -ItemType Directory $workstationreportfolder | Out-Null
-					LogWrite "$attachmentname saved to $workstationreportfolder"
-					$file = New-Object System.IO.FileStream(($workstationreportfolder + $attachmentname), [System.IO.FileMode]::Create)
-					$file.Write($attachment.Content, 0, $attachment.Content.Length)
-				} else {
-					LogWrite "$attachmentname saved to $workstationreportfolder"
-					$file = New-Object System.IO.FileStream(($workstationreportfolder + $attachmentname), [System.IO.FileMode]::Create)
-					$file.Write($attachment.Content, 0, $attachment.Content.Length)
 				}
+				LogWrite "$attachmentname saved to $workstationreportfolder"
+				$file = New-Object System.IO.FileStream(($workstationreportfolder + $attachmentname), [System.IO.FileMode]::Create)
+				$file.Write($attachment.Content, 0, $attachment.Content.Length)
 				$file.Close()
 			} elseif ($attachmentname -like '*Server*'){
 				$serverreportfolder = $reportroot + "Servers\" + $fileyear + "\" + $filemonth + "\"
@@ -123,14 +119,10 @@ Function FindTargetEmail($subject){
 					LogWrite "$serverreportfolder not found.."
 					LogWrite "Creating it now.."
 					New-Item -ItemType Directory $serverreportfolder | Out-Null
-					LogWrite "$attachmentname saved to $serverreportfolder"
-					$file = New-Object System.IO.FileStream(($serverreportfolder + $attachmentname), [System.IO.FileMode]::Create)
-					$file.Write($attachment.Content, 0, $attachment.Content.Length)
-				} else {
-					LogWrite "$attachmentname saved to $serverreportfolder"
-					$file = New-Object System.IO.FileStream(($serverreportfolder + $attachmentname), [System.IO.FileMode]::Create)
-					$file.Write($attachment.Content, 0, $attachment.Content.Length)
 				}
+				LogWrite "$attachmentname saved to $serverreportfolder"	
+				$file = New-Object System.IO.FileStream(($serverreportfolder + $attachmentname), [System.IO.FileMode]::Create)	
+				$file.Write($attachment.Content, 0, $attachment.Content.Length)
 				$file.Close()
 			} else {}
 		}
