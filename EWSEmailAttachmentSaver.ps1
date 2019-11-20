@@ -49,7 +49,7 @@ Function LogWrite
 	Param ([string]$logstring)
 	
 	if (!(Test-Path $logpath)) {
-		New-Item -ItemType Directory $logpath
+		New-Item -ItemType Directory $logpath | Out-Null
 	} 
 	else { 
 		Add-content $logfile -value $logstring
